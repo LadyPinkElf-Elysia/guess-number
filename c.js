@@ -58,11 +58,11 @@ myApp({
             },
             AudioSrc: {
                 '1': { 'name': '蝶恋花', 'src': "./music/蝶恋花.ogg" },
-                '2': { 'name': '熙熙攘攘我们的城市', 'src': "./music/トゲナシトゲアリ - 雑踏、僕らの街 (熙熙攘攘、我们的城市、熙熙攘攘我们的城市、Wrong World) (OP).ogg" },
+                '2': { 'name': '熙熙攘攘我们的城市', 'src': "./music/熙熙攘攘我们的城市.ogg" },
                 '3': { 'name': '世末歌者', 'src': "./music/世末歌者.ogg" },
                 '4': { 'name': '千本樱', 'src': "./music/千本樱.ogg" },
                 '5': { 'name': '大荒寻梦录', 'src': "./music/大荒寻梦录（高配）.ogg" },
-                '6': { 'name': '红昭愿', 'src': "./music/洛天依 _ 音阙诗听 - 红昭愿.ogg" },
+                '6': { 'name': '红昭愿', 'src': "./music/红昭愿.ogg" },
             },
             Music: {
                 'index': '1',
