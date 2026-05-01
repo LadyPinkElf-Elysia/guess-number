@@ -65,6 +65,9 @@ myApp({
                 '5': { 'name': '群青', 'src': "./music/群青.ogg" },
                 '6': { 'name': '浴火重生', 'src': "./music/浴火重生.ogg" },
                 '7': { 'name': '英雄出征', 'src': "./music/英雄出征.ogg" },
+                '8': { 'name': '非人哉', 'src': "./music/非人哉.ogg" },
+                '9': { 'name': '熙熙攘攘我们的城市', 'src': "./music/熙熙攘攘我们的城市.ogg" },
+                '10': { 'name': '红昭愿', 'src': "./music/红昭愿.ogg" },
             },
             Music: {
                 'index': '1',
@@ -242,7 +245,7 @@ myApp({
         },
 
         showAnswer: function () {
-            alert((this.game['Target'] !== '') ? `答案是：${this.game['Target']} ✅` : " 还没开始游戏 ❗");
+            alert( `答案是：${this.game['Target']} ✅`);
         },
 
         showPosHint: function () {
