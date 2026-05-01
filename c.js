@@ -64,6 +64,7 @@ myApp({
                 '4': { 'name': '千本樱', 'src': "./music/千本樱.ogg" },
                 '5': { 'name': '大荒寻梦录', 'src': "./music/大荒寻梦录（高配）.ogg" },
                 '6': { 'name': '红昭愿', 'src': "./music/红昭愿.ogg" },
+                '7': { 'name': '群青', 'src': "./music/群青.ogg" },
             },
             Music: {
                 'index': '1',
