@@ -85,6 +85,7 @@ myApp({
                 'dynamic': '0',
                 'historyMax': 10,
             },
+            cheatHandler: null,
 
         }//
 
@@ -92,7 +93,6 @@ myApp({
 
     created() {
         this.loadRecord();
-        this.cheatKey();
         this.computeScore();
     },
 
@@ -138,7 +138,7 @@ myApp({
             if (!confirm('确定清空战绩？该操作不可逆❗')) {
                 return;
             }
-            this.history['recent'] = [];
+            this.history['recent'] = this.history['recent'].filter(i => i.locked);
             this.saveRecord();
         },
 
@@ -156,21 +156,23 @@ myApp({
         },
 
         setGameClassic: function (level) {
+            let classic = this.classicMap[level];
             this.game['Level'] = level;
-            this.game['Name'] = this.classicMap[level]['name'];
-            this.game['Len'] = Number(this.classicMap[level]['len']);           //字符串0/1转数字
-            this.game['Repeat'] = (this.classicMap[level]['repeat'] === '1');   //字符串0/1转布尔值
-            this.game['Purple'] = (this.classicMap[level]['purple'] === '1');
-            this.game['Max'] = Number(this.classicMap[level]['max']);
+            this.game['Name'] = classic['name'];
+            this.game['Len'] = Number(classic['len']);           //字符串0/1转数字
+            this.game['Repeat'] = (classic['repeat'] === '1');   //字符串0/1转布尔值
+            this.game['Purple'] = (classic['purple'] === '1');
+            this.game['Max'] = Number(classic['max']);
             this.computeScore();
         },
 
         setGameCustom: function () {
-            this.game['Name'] = `自定义${this.customMap['len']}位`;
-            this.game['Len'] = Number(this.customMap['len']);
-            this.game['Repeat'] = (this.customMap['repeat'] === '1');
-            this.game['Purple'] = (this.customMap['purple'] === '1');
-            this.game['Max'] = Number(this.customMap['max']);
+            let custom = this.customMap;
+            this.game['Name'] = `自定义${custom['len']}位`;
+            this.game['Len'] = Number(custom['len']);
+            this.game['Repeat'] = (custom['repeat'] === '1');
+            this.game['Purple'] = (custom['purple'] === '1');
+            this.game['Max'] = Number(custom['max']);
             this.computeScore();
         },
 
@@ -222,6 +224,10 @@ myApp({
             this.game['Target'] = this.getTarget();
             this.game['Msg'] = '新局开始';
 
+            if (!this.cheatHandler) {
+                this.cheatKey();
+            }
+
             this.showPanel('game');
         },
 
@@ -260,13 +266,24 @@ myApp({
         },
 
         cheatKey: function () {
-            const self = this;
-            document.addEventListener("keydown", (e) => {
+            if (this.cheatHandler) {
+                document.removeEventListener("keydown", this.cheatHandler);
+            }
+            this.cheatHandler = (e) => {
                 if (e.key === "s") {
                     e.preventDefault();
-                    self.showAnswer();
+                    this.showAnswer();
                 }
-            });
+            };
+            document.addEventListener("keydown", this.cheatHandler);
+
+        },
+
+        removeCheatKey: function () {
+            if (this.cheatHandler) {
+                document.removeEventListener("keydown", this.cheatHandler);
+                this.cheatHandler = null;
+            }
         },
 
         getTarget: function () {
@@ -307,14 +324,18 @@ myApp({
                 this.game['Win'] = true;
                 this.game['Msg'] = `恭喜猜对，答案是${this.game['Target']}`;
                 this.addRecord();
+                this.removeCheatKey();
             } else if (this.game['Attempts'] >= this.game['Max']) {
                 this.game['Lost'] = true;
                 this.game['Msg'] = `游戏结束，答案是${this.game['Target']}`;
                 this.addRecord();
+                this.removeCheatKey();
             }
 
             this.game['Input'] = '';
         },
+
+
 
         getResult: function (userInput, target) {
             let u = userInput.split('');
@@ -322,8 +343,8 @@ myApp({
             let len = userInput.length;     //length方法，求长度
             let result = [];
             let isDynamic = (this.settingMap['dynamic'] === '1');
-
             let count = {};
+
             if (isDynamic) {
                 for (let num of t) {
                     count[num] = (count[num] || 0) + 1;
@@ -342,42 +363,61 @@ myApp({
             }
 
             if (!this.game['Purple']) {
-                for (let i = 0; i < len; i++) {
-                    if (result[i] !== '') continue;
-                    if (!isDynamic) {
-                        result[i] = (t.includes(u[i])) ? 'yellow' : 'red';
-                    } else {
-                        if (count[u[i]] > 0) {
-                            result[i] = 'yellow';
-                            count[u[i]]--;
-                        } else {
-                            result[i] = 'red';
-                        }
-                    }
-                }
-
+                this.fillClassic(u, t, result, count, isDynamic);
             } else {
-                for (let i = 0; i < len; i++) {
-                    if (result[i] !== '') continue;
-                    if (!isDynamic) {
-                        let pos = t.indexOf(u[i]);
-                        if (pos !== -1) {
-                            result[i] = (pos < i) ? 'yellow' : 'purple';
-                        } else {
-                            result[i] = 'red';
-                        }
-                    } else {
-                        if (count[u[i]] > 0) {
-                            let pos = t.indexOf(u[i]);
-                            result[i] = (pos < i) ? 'yellow' : 'purple';
-                            count[u[i]]--;
-                        } else {
-                            result[i] = 'red';
-                        }
-                    }
-                }
+                this.fillPurple(u, t, result, count, isDynamic);
             }
             return result;
+        },
+
+        fillClassic: function (u, t, result, count, isDynamic) {
+            let len = u.length;
+            for (let i = 0; i < len; i++) {
+                if (result[i] !== '') continue;
+
+                if (!isDynamic) {
+                    result[i] = (t.includes(u[i])) ? 'yellow' : 'red';
+                } else {
+
+                    if (count[u[i]] > 0) {
+                        result[i] = 'yellow';
+                        count[u[i]]--;
+                    } else {
+                        result[i] = 'red';
+                    }
+
+                }
+                //
+            }
+        },
+
+        fillPurple: function (u, t, result, count, isDynamic) {
+            let len = u.length;
+            for (let i = 0; i < len; i++) {
+                if (result[i] !== '') continue;
+
+                if (!isDynamic) {
+                    let pos = t.indexOf(u[i]);
+
+                    if (pos !== -1) {
+                        result[i] = (pos < i) ? 'yellow' : 'purple';
+                    } else {
+                        result[i] = 'red';
+                    }
+
+                } else {
+
+                    if (count[u[i]] > 0) {
+                        let pos = t.indexOf(u[i]);
+                        result[i] = (pos < i) ? 'yellow' : 'purple';
+                        count[u[i]]--;
+                    } else {
+                        result[i] = 'red';
+                    }
+
+                }
+                //
+            }
         },
 
         confirm: function () {
@@ -396,12 +436,19 @@ myApp({
                 'score': (this.game['Win']) ? this.scores['final'] : 0,
                 'win': this.game['Win'],
                 'list': this.game['List'],
+                'locked': false,
             });
 
-            if (this.history['recent'].length > Number(this.settingMap['historyMax'])) {
-                this.history['recent'].splice(Number(this.settingMap['historyMax']));
+            let maxCount = Number(this.settingMap['historyMax']);
+            let locked = this.history['recent'].filter(i => i.locked);
+            let unlocked = this.history['recent'].filter(i => !i.locked);
+
+            if (unlocked.length > maxCount) {
+                unlocked.splice(maxCount);
                 //修改数组（删除、添加、替换），splice(1, 1) // 从下标 1 删 1 个，splice(8) // 保留前 8 个，splice(1, 0, 99) // 在下标1插入99
             }
+
+            this.history['recent'] = [...locked, ...unlocked];
 
             this.saveRecord();
         },
@@ -413,7 +460,10 @@ myApp({
         loadRecord: function () {
             let r = localStorage.getItem('RecentGames');
             if (r) {
-                this.history['recent'] = JSON.parse(r);
+                this.history['recent'] = JSON.parse(r).map(record => {
+                    record['locked'] = record['locked'] ?? false;
+                    return record;
+                });
             }
         },
 
@@ -421,6 +471,12 @@ myApp({
             this.history['replay'] = record;
             this.showPanel('replay');
         },
+
+        switchLock: function (index) {
+            let record = this.history['recent'][index];
+            record['locked'] = !record['locked'];
+            this.saveRecord();
+        }
 
 
     }
