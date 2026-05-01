@@ -27,7 +27,7 @@ myApp({
             game: {
                 'Mode': 'classic',
                 'Level': '',
-                'Name': '',
+                'Name': '经典-简单',
 
                 'Len': 4,
                 'Repeat': false,
@@ -39,6 +39,7 @@ myApp({
                 'Attempts': 0,
                 'List': [],
                 'Color': [],
+
                 'Msg': '',
                 'Win': false,
                 'Lost': false,
@@ -123,6 +124,7 @@ myApp({
             this.game['Attempts'] = 0;
             this.game['List'] = [];
             this.game['Color'] = [];
+
             this.game['Msg'] = '';
             this.game['Win'] = false;
             this.game['Lost'] = false;
@@ -162,24 +164,31 @@ myApp({
             }
         },
 
+        strNumToBool: function (string) {
+            return (string === '1');
+        },
+
+        setGameData: function (Mode) {
+            this.game['Len'] = Number(Mode['len']);                   //字符串0/1转数字
+            this.game['Repeat'] = this.strNumToBool(Mode['repeat']);  //字符串0/1转布尔值
+            this.game['Purple'] = this.strNumToBool(Mode['purple']);
+            this.game['Max'] = Number(Mode['max']);
+        },
+
         setGameClassic: function (level) {
             let classic = this.classicMap[level];
             this.game['Level'] = level;
             this.game['Name'] = classic['name'];
-            this.game['Len'] = Number(classic['len']);           //字符串0/1转数字
-            this.game['Repeat'] = (classic['repeat'] === '1');   //字符串0/1转布尔值
-            this.game['Purple'] = (classic['purple'] === '1');
-            this.game['Max'] = Number(classic['max']);
+
+            this.setGameData(classic);
             this.computeScore();
         },
 
         setGameCustom: function () {
             let custom = this.customMap;
             this.game['Name'] = `自定义${custom['len']}位`;
-            this.game['Len'] = Number(custom['len']);
-            this.game['Repeat'] = (custom['repeat'] === '1');
-            this.game['Purple'] = (custom['purple'] === '1');
-            this.game['Max'] = Number(custom['max']);
+
+            this.setGameData(custom);
             this.computeScore();
         },
 
@@ -229,12 +238,9 @@ myApp({
             this.clearHint();
 
             this.game['Target'] = this.getTarget();
-            this.game['Msg'] = '新局开始';
+            this.game['Msg'] = '新局开始✅';
 
-            if (!this.cheatHandler) {
-                this.cheatKey();
-            }
-
+            if (!this.cheatHandler) { this.cheatKey(); }
             this.showPanel('game');
         },
 
@@ -246,16 +252,17 @@ myApp({
         },
 
         showAnswer: function () {
-            alert( `答案是：${this.game['Target']} ✅`);
+            alert(`答案是：${this.game['Target']} ✅`);
         },
 
         showPosHint: function () {
             if (this.game['Win'] || this.game['Lost']) {
-                this.game['Msg'] = '游戏已结束';
+                this.game['Msg'] = '游戏已结束❗';
                 return;
             }
+
             if (this.game['Target'] === '') {
-                this.game['Msg'] = '请先开始游戏';
+                this.game['Msg'] = '请先开始游戏❗';
                 return;
             }
 
@@ -264,7 +271,7 @@ myApp({
             let f = `第 ${pos + 1} 位数字是：${num}`;
 
             if (this.hint['result'].includes(f)) {
-                this.game['Msg'] = '该位置已提示过，不可重复提示';
+                this.game['Msg'] = '该位置已提示过，不可重复提示❗';
                 return;
             }
 
@@ -329,12 +336,12 @@ myApp({
 
             if (input === target) {
                 this.game['Win'] = true;
-                this.game['Msg'] = `恭喜猜对，答案是${this.game['Target']}`;
+                this.game['Msg'] = `恭喜猜对，答案是${this.game['Target']}✅`;
                 this.addRecord();
                 this.removeCheatKey();
             } else if (this.game['Attempts'] >= this.game['Max']) {
                 this.game['Lost'] = true;
-                this.game['Msg'] = `游戏结束，答案是${this.game['Target']}`;
+                this.game['Msg'] = `游戏结束，答案是${this.game['Target']}✅`;
                 this.addRecord();
                 this.removeCheatKey();
             }
@@ -349,7 +356,7 @@ myApp({
             let t = target.split('');
             let len = userInput.length;     //length方法，求长度
             let result = [];
-            let isDynamic = (this.settingMap['dynamic'] === '1');
+            let isDynamic = this.strNumToBool(this.settingMap['dynamic']);
             let count = {};
 
             if (isDynamic) {
@@ -403,25 +410,20 @@ myApp({
             for (let i = 0; i < len; i++) {
                 if (result[i] !== '') continue;
 
+                let pos = t.indexOf(u[i]);
                 if (!isDynamic) {
-                    let pos = t.indexOf(u[i]);
-
                     if (pos !== -1) {
                         result[i] = (pos < i) ? 'yellow' : 'purple';
                     } else {
                         result[i] = 'red';
                     }
-
                 } else {
-
                     if (count[u[i]] > 0) {
-                        let pos = t.indexOf(u[i]);
                         result[i] = (pos < i) ? 'yellow' : 'purple';
                         count[u[i]]--;
                     } else {
                         result[i] = 'red';
                     }
-
                 }
                 //
             }
@@ -447,12 +449,18 @@ myApp({
             });
 
             let maxCount = Number(this.settingMap['historyMax']);
-            let locked = this.history['recent'].filter(i => i.locked);
+            let locked = this.history['recent'].filter(i => i.locked);      
             let unlocked = this.history['recent'].filter(i => !i.locked);
+            //filter(元素 => 筛选条件)，用于筛选数组元素，返回符合条件的数组，不修改原数组
 
             if (unlocked.length > maxCount) {
                 unlocked.splice(maxCount);
-                //修改数组（删除、添加、替换），splice(1, 1) // 从下标 1 删 1 个，splice(8) // 保留前 8 个，splice(1, 0, 99) // 在下标1插入99
+                //修改原数组（删除、添加、替换），splice(1, 1) 从下标 1 删 1 个
+                //  splice(8) 保留前 8 个
+                //  splice(1, 0, 99) 在下标1插入99
+                //  splice(开始位置，删除个数，插入元素)
+                //  开始位置包含原数字，支持负数（从后往前）
+                //  删除位置可选，默认删除到末尾，传0不删除
             }
 
             this.history['recent'] = [...locked, ...unlocked];
@@ -468,7 +476,8 @@ myApp({
             let r = localStorage.getItem('RecentGames');
             if (r) {
                 this.history['recent'] = JSON.parse(r).map(record => {
-                    record['locked'] = record['locked'] ?? false;
+                    record['locked'] = record['locked'] ?? false;   
+                    //??空值合并运算符，当变量值为null或者undefined时取后面默认值
                     return record;
                 });
             }

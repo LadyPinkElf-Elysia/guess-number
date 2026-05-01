@@ -87,19 +87,9 @@
             </div>
 
             <div>
+                <button @click="showPanel('settings')"> 设置 </button>
                 <button @click="startGame"> 开始游戏 </button>
                 <button @click="showPanel('score')"> 查看战绩 </button>
-                <button @click="showPanel('settings')"> 设置 </button>
-            </div>
-
-            <div class="item">
-                <select v-model="Music['index']">
-                    <template v-for="(item,key) in AudioSrc">
-                        <option :value="key"> {{ item['name'] }} </option>
-                    </template>
-                </select>
-                <audio ref="bgm" loop preload="auto"></audio>
-                <button @click="play"> {{ Music['isPlaying'] ? '⏸️' : '🎵' }} </button>
             </div>
 
         </div>
@@ -111,15 +101,35 @@
                 <span> 当前难度：{{ game['Name'] }} (难度分：{{ scores['final'] }}) </span><br>
                 <span> 游戏规则：</span><br>
                 <span> 1.随机生成 {{ game['Len'] }} 位数字（{{ game['Repeat'] ? '可重复' : '不可重复'}}）</span><br>
-                <span> 2.<span class="green">绿色数字</span> 该数字大小和当前位置都正确 </span><br>
-                <span> 3.<span class="red">红色数字</span> 任何位置都没有该数字 </span><br>
+                <span> 2.<span class="green">绿色数字</span> ：该数字答案中存在且在当前位置 </span><br>
+                <span> 3.<span class="red">红色数字</span> ：该数字答案中不存在 </span><br>
                 <span v-if=" !game['Purple'] ">
-                    <span> 4.<span class="yellow">黄色数字</span> 该数字不应在当前位置 </span><br>
+                    <span> 4.<span class="yellow">黄色数字</span> ：该数字答案中存在，但不在当前位置 </span><br>
                 </span>
                 <span v-else>
-                    <span> 4.<span class="yellow">黄色数字</span> 该数字应在当前位置左侧 </span><br>
-                    <span> 5.<span class="purple">紫色数字</span> 该数字应在当前位置右侧 </span><br>
+                    <span> 4.<span class="yellow">黄色数字</span> ：该数字答案中存在，但在当前位置左侧 </span><br>
+                    <span> 5.<span class="purple">紫色数字</span> ：该数字答案中存在，但在当前位置右侧 </span><br>
                 </span>
+                <span v-if="settingMap['dynamic']==='1' ">
+                    注：
+                    <br>
+                    颜色处理机制的动态指的是绿色数字会影响到黄色的判断，<br>
+                    如猜测1110，答案为1001，<br>
+                    如果是动态的，那么猜测的结果是
+                    <span class="green">1</span><span class="yellow">1</span>
+                    <span class="red">1</span><span class="yellow">0</span>，
+                    一个绿色<span class="green">1</span>和
+                    一个黄色<span class="yellow">1</span><br>以及
+                    一个红色<span class="red">1</span>，因为答案只有两个1，
+                    所以第三个1才被标红，
+                    <br>
+                    如果是非动态的，那么猜测的结果是
+                    <span class="green">1</span><span class="yellow">1</span>
+                    <span class="yellow">1</span><span class="yellow">0</span>，
+                    重复的数字不会有红色，只会是黄和绿色
+                    <br>
+                    动态会统计重复的数字，非动态不会
+                </span><br>
             </div>
 
             <div class="text"><span> 当前输入次数： {{ game['Attempts'] }}/{{ game['Max'] }} </span></div>
@@ -165,8 +175,8 @@
             </div>
 
             <div>
-                <button @click="startGame">重开一把</button>
                 <button @click="showPanel('mode')">返回模式</button>
+                <button @click="startGame">重开一把</button>
                 <button @click="showPanel('score')">查看战绩</button>
             </div>
 
@@ -188,8 +198,8 @@
             </div>
 
             <div>
-                <button @click="clearRecord">清空战绩</button>
                 <button @click=" showPanel('mode') ">返回模式</button>
+                <button @click="clearRecord">清空战绩</button>
             </div>
 
         </div>
@@ -220,6 +230,17 @@
             </div>
 
             <div class="item">
+                <label>背景音乐：</label>
+                <select v-model="Music['index']">
+                    <template v-for="(item,key) in AudioSrc">
+                        <option :value="key"> {{ item['name'] }} </option>
+                    </template>
+                </select>
+                <audio ref="bgm" loop preload="auto"></audio>
+                <button @click="play"> {{ Music['isPlaying'] ? '⏸️' : '🎵' }} </button>
+            </div>
+
+            <div class="item">
                 <label>颜色判断机制：</label>
                 <select v-model="settingMap['dynamic']">
                     <option value="0">非动态</option>
@@ -228,8 +249,10 @@
             </div>
 
             <div>
+                <button @click="showPanel('loading')">返回开始</button>
                 <button @click="showPanel('mode')">返回模式</button>
             </div>
+
         </div>
 
     </div>
@@ -238,4 +261,5 @@
     <script src="./c.js"></script>
 
 </body>
+
 </html>
