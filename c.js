@@ -72,11 +72,12 @@ myApp({
                 'src': "./music/蝶恋花.ogg",
             },
             panel: {
-                'mode': true,
+                'mode': false,
                 'game': false,
                 'score': false,
                 'replay': false,
                 'settings': false,
+                'loading':true,
             },
             history: {
                 'recent': [],   //历史战绩
@@ -98,6 +99,7 @@ myApp({
     },
 
     methods: {
+
         clearGameMode: function () {          //清空模式
             this.game['Mode'] = 'classic';
             this.game['Level'] = '';
@@ -477,8 +479,7 @@ myApp({
             let record = this.history['recent'][index];
             record['locked'] = !record['locked'];
             this.saveRecord();
-        }
-
+        },
 
     }
 }).mount('#app')
