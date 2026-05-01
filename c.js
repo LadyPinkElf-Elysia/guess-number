@@ -84,7 +84,7 @@ myApp({
                 'replay': {}     //回放对局
             },
             settingMap: {
-                'dynamic': '1',
+                'dynamic': '0',
                 'historyMax': 10,
             },
             cheatHandler: null,
