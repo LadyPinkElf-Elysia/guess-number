@@ -77,7 +77,7 @@ myApp({
                 'score': false,
                 'replay': false,
                 'settings': false,
-                'loading':true,
+                'loading': true,
             },
             history: {
                 'recent': [],   //历史战绩
