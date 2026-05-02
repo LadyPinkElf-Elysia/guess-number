@@ -13,9 +13,9 @@
         <div class="panel" id="panel-loading" name="加载界面" v-show="panel['loading']">
             <h2>少女祈祷中</h2>
 
-            <div>
-                <img src="./小奥-希望人没事.png" alt="少女祈祷失败" style="max-width: 90%;">
-            </div>
+            <!-- <div>
+                <img src="./img/小奥-希望人没事.png" alt="少女祈祷失败" style="max-width: 90%;">
+            </div> -->
 
             <div>
                 <button @click="showPanel('mode')"> 进入游戏 </button>
@@ -111,24 +111,18 @@
                     <span> 5.<span class="purple">紫色数字</span> ：该数字答案中存在，但在当前位置右侧 </span><br>
                 </span>
                 <span v-if="settingMap['dynamic']==='1' ">
-                    注：
-                    <br>
-                    颜色处理机制的动态指的是绿色数字会影响到黄色的判断，<br>
-                    如猜测1110，答案为1001，<br>
-                    如果是动态的，那么猜测的结果是
+                    <strong>颜色处理机制：</strong><br>
+                    绿色数字会影响到黄色和红色的统计<br>
+                    例如猜测1110，答案为1001：<br>
+                    动态的猜测结果：
                     <span class="green">1</span><span class="yellow">1</span>
-                    <span class="red">1</span><span class="yellow">0</span>，
-                    一个绿色<span class="green">1</span>和
-                    一个黄色<span class="yellow">1</span><br>以及
-                    一个红色<span class="red">1</span>，因为答案只有两个1，
-                    所以第三个1才被标红，
-                    <br>
-                    如果是非动态的，那么猜测的结果是
+                    <span class="red">1</span><span class="yellow">0</span>
+                    （答案只有两个1，第三个1被标红）<br>
+                    非动态的猜测结果：
                     <span class="green">1</span><span class="yellow">1</span>
-                    <span class="yellow">1</span><span class="yellow">0</span>，
-                    重复的数字不会有红色，只会是黄和绿色
-                    <br>
-                    动态会统计重复的数字，非动态不会
+                    <span class="yellow">1</span><span class="yellow">0</span>
+                    （重复数字不会变红，只能是黄和绿）<br>
+                    <b>动态会统计重复的数字，非动态不会</b>
                 </span><br>
             </div>
 

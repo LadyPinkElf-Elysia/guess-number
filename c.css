@@ -18,12 +18,16 @@ body {
 }
 
 .panel {
-    background: rgb(255, 255, 255);
+    background: rgba(255, 255, 255,0.7);
     border: 2px solid #bfdbfe;
     border-radius: 16px;
     padding: 24px;
     box-shadow: 0 4px 12px #dbeafe;
     margin-bottom: 16px;
+    background-image: url('./img/七夕页面.png');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
 }
 
 .rule {
