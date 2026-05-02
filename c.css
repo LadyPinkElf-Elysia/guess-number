@@ -24,6 +24,7 @@ body {
     padding: 24px;
     box-shadow: 0 4px 12px #dbeafe;
     margin-bottom: 16px;
+    background-image: url('');
     background-size: cover;
     background-position: center;
     background-blend-mode: overlay;
@@ -158,13 +159,15 @@ input[type="text"],input[type="file"] {
 
 body {
     background: #f0f8ff;
-    padding: 5px;
+    padding: 10px;
+    min-height: 100vh;
 }
 
 #app {
-    width: 90%;
+    width: 95%;
+    height: 100%;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 10px auto;
     text-align: center;
 }
 
@@ -172,9 +175,10 @@ body {
     background-color: rgba(255, 255, 255, 0.3);
     border: 2px solid #bfdbfe;
     border-radius: 16px;
-    padding: 24px;
+    padding: 64px 36px;
     box-shadow: 0 4px 12px #dbeafe;
     margin-bottom: 16px;
+    background-image: url('./img/小奥-希望人没事.png');
     background-size: cover;
     background-position: center;
     background-blend-mode: overlay;
@@ -220,7 +224,7 @@ button {
     padding: 10px 10px;
     font-size: 16px;
     font-weight: 500;
-    background-color: rgba(224, 242, 254, 0.8);
+    background-color: rgba(224, 242, 254, 0.6);
     /* 透明50% */
     color: #0369a1;
     border: 1px solid rgba(147, 197, 253, 0.7);
@@ -236,9 +240,9 @@ button:hover {
 
 button.active,
 button:focus {
-    background-color: rgba(59, 130, 246, 0.9);
+    background-color: rgba(59, 130, 246, 0.5);
     color: white;
-    border-color: rgba(37, 99, 235, 0.9);
+    border-color: rgba(37, 99, 235, 0.5);
 }
 
 button:disabled {
