@@ -92,6 +92,7 @@ myApp({
             settingMap: {
                 'dynamic': '0',
                 'historyMax': 10,
+                'bgImage': '',
             },
             cheatHandler: null,
 
@@ -493,6 +494,26 @@ myApp({
             let record = this.history['recent'][index];
             record['locked'] = !record['locked'];
             this.saveRecord();
+        },
+
+        setBgImage: (e) => {
+            const file = e.target.files?.[0];
+
+            if (!file || !file.type.startsWith('image/')) {
+                alert("请选择有效图片！");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const imgUrl = event.target.result;
+
+                const panels = document.querySelectorAll('.panel');
+                panels.forEach(panel => {
+                    panel.style.backgroundImage = `url(${imgUrl})`;
+                });
+            };
+            reader.readAsDataURL(file);
         },
 
     }

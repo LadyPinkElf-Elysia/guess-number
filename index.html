@@ -42,7 +42,7 @@
                     <label>数字位数：</label>
                     <select v-model="customMap['len']" @change="setGameCustom">
                         <template v-for="(base,key) in baseMap">
-                            <option :value="key"> {{key}}位数字 基础分 +{{ base[false] }} </option>
+                            <option :value="key"> {{key}}位数字 基础分+{{ base[false] }}分 </option>
                         </template>
                     </select>
                 </div>
@@ -50,8 +50,8 @@
                 <div class="item">
                     <label>数字重复性：</label>
                     <select v-model="customMap['repeat']" @change="setGameCustom">
-                        <option value="1"> 可重复 基础分 +{{ scores['repeat'] }}分 </option>
-                        <option value="0" checked> 不可重复 基础分 + 0分 </option>
+                        <option value="1"> 可重复 基础分+{{ scores['repeat'] }}分 </option>
+                        <option value="0" checked> 不可重复 基础分+0分 </option>
                     </select>
                 </div>
 
@@ -59,7 +59,7 @@
                     <label>提示机制：</label>
                     <select v-model="customMap['purple']" @change="setGameCustom">
                         <option value="0" checked> 经典 比例分+20% （+{{ scores['purple'] }}分） </option>
-                        <option value="1"> 紫色 比例分+0% （+ 0分） </option>
+                        <option value="1"> 紫色 比例分+0% （+0分） </option>
                     </select>
                 </div>
 
@@ -236,6 +236,11 @@
                     <option value="0">非动态</option>
                     <option value="1">动态</option>
                 </select>
+            </div>
+
+            <div class="item">
+                <label>背景图片：</label>
+                <input type="file" accept="image/*" @change="setBgImage">
             </div>
 
             <div>

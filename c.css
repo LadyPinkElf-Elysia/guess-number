@@ -1,4 +1,4 @@
-* {
+/* * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -18,13 +18,12 @@ body {
 }
 
 .panel {
-    background: rgba(255, 255, 255,0.3);
+    background-color: rgba(255, 255, 255,0.3);
     border: 2px solid #bfdbfe;
     border-radius: 16px;
     padding: 24px;
     box-shadow: 0 4px 12px #dbeafe;
     margin-bottom: 16px;
-    background-image: url('./img/七夕页面.png');
     background-size: cover;
     background-position: center;
     background-blend-mode: overlay;
@@ -113,7 +112,7 @@ button:disabled {
     border-radius: 8px;
 }
 
-input[type="text"] {
+input[type="text"],input[type="file"] {
     padding: 10px;
     border: 1px solid #93c5fd;
     border-radius: 12px;
@@ -124,6 +123,169 @@ input[type="text"] {
 .text {
     background: #f8fafc;
     border: 1px solid #dbeafe;
+    padding: 5px;
+    border-radius: 12px;
+    margin: 5px 0;
+    line-height: 1.5;
+}
+
+.item:last-child {
+    justify-content: center;
+}
+
+.text-history {
+    text-align: center;
+}
+
+.text:empty {
+    display: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+}
+
+.text:not(:empty) {
+    display: block;
+} */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f0f8ff;
+    padding: 5px;
+}
+
+#app {
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.panel {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid #bfdbfe;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px #dbeafe;
+    margin-bottom: 16px;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+}
+
+.rule {
+    border: 1px solid #bfdbfe;
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(240, 247, 255, 0.5);
+    /* 半透明 */
+    margin: 14px 0;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.green {
+    color: green;
+    font-weight: bold;
+    font-size: 16px
+}
+
+.yellow {
+    color: #fa0;
+    font-weight: bold;
+    font-size: 16px
+}
+
+.red {
+    color: red;
+    font-weight: bold;
+    font-size: 16px
+}
+
+.purple {
+    color: #9900ff;
+    font-weight: bold;
+    font-size: 16px
+}
+
+/* ========== 所有按钮 半透明 ========== */
+button {
+    padding: 10px 10px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: rgba(224, 242, 254, 0.8);
+    /* 透明50% */
+    color: #0369a1;
+    border: 1px solid rgba(147, 197, 253, 0.7);
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 5px;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: rgba(186, 230, 253, 0.95);
+}
+
+button.active,
+button:focus {
+    background-color: rgba(59, 130, 246, 0.9);
+    color: white;
+    border-color: rgba(37, 99, 235, 0.9);
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.item {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.item label {
+    min-width: 50px;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* ========== 下拉框 半透明 ========== */
+.item select {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid rgba(147, 197, 253, 0.8);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    /* 透明 */
+    color: #333;
+}
+
+/* ========== 输入框 & 上传框 半透明 ========== */
+input[type="text"],
+input[type="file"] {
+    padding: 10px;
+    border: 1px solid rgba(147, 197, 253, 0.8);
+    border-radius: 12px;
+    width: 60%;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    /* 透明 */
+}
+
+/* ========== 文本框 半透明 ========== */
+.text {
+    background: rgba(248, 250, 252, 0.7);
+    border: 1px solid rgba(219, 234, 254, 0.7);
     padding: 5px;
     border-radius: 12px;
     margin: 5px 0;
