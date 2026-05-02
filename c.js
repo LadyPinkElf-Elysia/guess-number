@@ -3,9 +3,10 @@ myApp({
     data() {
         return {
             classicMap: {
-                'easy': { 'name': '经典-简单', 'len': '4', 'repeat': '0', 'purple': '0', 'max': '10', },
-                'hard': { 'name': '经典-困难', 'len': '6', 'repeat': '0', 'purple': '0', 'max': '10', },
-                'hell': { 'name': '经典-地狱', 'len': '8', 'repeat': '0', 'purple': '0', 'max': '10', },
+                'easy': { 'name': '简单', 'len': '4', 'repeat': '0', 'purple': '0', 'max': '10', },
+                'hard': { 'name': '困难', 'len': '6', 'repeat': '0', 'purple': '0', 'max': '10', },
+                'hell': { 'name': '地狱', 'len': '8', 'repeat': '0', 'purple': '0', 'max': '10', },
+                'end': { 'name': '终焉', 'len': '10', 'repeat': '0', 'purple': '0', 'max': '10', }
             },
             customMap: { 'len': '4', 'repeat': '0', 'purple': '0', 'max': '10', },
             baseMap: {
@@ -449,7 +450,7 @@ myApp({
             });
 
             let maxCount = Number(this.settingMap['historyMax']);
-            let locked = this.history['recent'].filter(i => i.locked);      
+            let locked = this.history['recent'].filter(i => i.locked);
             let unlocked = this.history['recent'].filter(i => !i.locked);
             //filter(元素 => 筛选条件)，用于筛选数组元素，返回符合条件的数组，不修改原数组
 
@@ -476,7 +477,7 @@ myApp({
             let r = localStorage.getItem('RecentGames');
             if (r) {
                 this.history['recent'] = JSON.parse(r).map(record => {
-                    record['locked'] = record['locked'] ?? false;   
+                    record['locked'] = record['locked'] ?? false;
                     //??空值合并运算符，当变量值为null或者undefined时取后面默认值
                     return record;
                 });
