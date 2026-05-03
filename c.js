@@ -304,7 +304,7 @@ myApp({
 
         getTarget: function () {
             let s = '';
-            let arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            let arr = [...'0123456789'];    //...展开运算符，类似于python的解包*
             let len = this.game['Len'];
             let rep = (!this.game['Repeat']);
             for (let k = 0; k < len; k++) {
@@ -330,8 +330,8 @@ myApp({
             let target = this.game['Target'];
             let res = this.getResult(input, target);//获得颜色数组
             this.game['List'].push({
-                digits: input.split(''),    //对应数字，split('')把字符串切成一个个字符
-                colors: res,                 //对应颜色
+                'digits': input.split(''),    //对应数字，split('')把字符串切成一个个字符
+                'colors': res,                 //对应颜色
             });                             //创建键值对
 
             this.game['Attempts']++;
@@ -472,6 +472,13 @@ myApp({
 
         saveRecord: function () {
             localStorage.setItem('RecentGames', JSON.stringify(this.history['recent']));
+            //localStorage 是浏览器本地永久存储，存了之后刷新页面、关浏览器、重启电脑都还在
+            //用localStorage.setItem('键名', 值)存，localStorage.getItem('键名')取
+            //只能存字符串，存数字也会变字符串，取也是字符串
+            //不能直接存数组/对象，要先用 JSON.stringify 转字符串存，取的时候用 JSON.parse 转回数组/对象
+            //let obj = {score: 100, win: true};                    对象
+            //localStorage.setItem('info', JSON.stringify(obj));    存对象到info里
+            //如let res = JSON.parse(localStorage.getItem('info')); 从info取出转为对象
         },
 
         loadRecord: function () {
@@ -496,18 +503,17 @@ myApp({
             this.saveRecord();
         },
 
-        setBgImage: (e) => {
-            const file = e.target.files?.[0];
+        setBgImage: function () {
+            const file = this.$refs.fileDom.files?.[0];//只读取一个文件
 
             if (!file || !file.type.startsWith('image/')) {
                 alert("请选择有效图片！");
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const imgUrl = event.target.result;
-
+            const reader = new FileReader();//实例化一个读取器
+            reader.onload = () => {
+                const imgUrl = reader.result;
                 const panels = document.querySelectorAll('.panel');
                 panels.forEach(panel => {
                     panel.style.backgroundImage = `url(${imgUrl})`;

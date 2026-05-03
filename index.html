@@ -158,8 +158,8 @@
             <div v-if="game['List'].length > 0">
                 <div v-for="(list,i) in game['List']" class="text history-row" :key="i">
                     第{{i+1}}次：
-                    <template v-for="(li,index) in list.digits">
-                        <span :class="list.colors[index]"> {{ li }} </span>
+                    <template v-for="(li,index) in list['digits']">
+                        <span :class="list['colors'][index]"> {{ li }} </span>
                     </template>
                 </div>
             </div>
@@ -199,8 +199,8 @@
 
             <div v-for="(list,i) in history['replay']['list']" class="text history-row" :key="i">
                 第{{i+1}}次：
-                <template v-for="(li,index) in list.digits" :key="index">
-                    <span :class="list.colors[index]"> {{ li }} </span>
+                <template v-for="(li,index) in list['digits']" :key="index">
+                    <span :class="list['colors'][index]"> {{ li }} </span>
                 </template>
             </div>
 
@@ -240,7 +240,7 @@
 
             <div class="item">
                 <label>背景图片：</label>
-                <input type="file" accept="image/*" @change="setBgImage">
+                <input type="file" ref="fileDom" accept="image/*" @change="setBgImage">
             </div>
 
             <div>
