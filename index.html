@@ -30,7 +30,7 @@
                 <!-- v-for="(值,键) in 对象" 如果又有v-if又有v-for就用template来当工具人 -->
                 <!-- 把v-for挂在template上，v-if挂在子元素上 -->
                 <!-- 如果对象是一个字典，那么值就是字典的一个分量 -->
-                <template v-for=" (item,key) in classicMap ">
+                <template v-for=" (item,key) in classicMap " :key="key">
                     <button @click="setGameClassic(key)">
                         {{ item['name'] }} ( {{ item['len']}} 位数字 {{ item['max'] }} 次机会 )
                     </button><br>
@@ -41,7 +41,7 @@
                 <div class="item">
                     <label>数字位数：</label>
                     <select v-model="customMap['len']" @change="setGameCustom">
-                        <template v-for="(base,key) in baseMap">
+                        <template v-for="(base,key) in baseMap" :key="key">
                             <option :value="key"> {{key}}位数字 基础分+{{ base[false] }}分 </option>
                         </template>
                     </select>
@@ -51,14 +51,14 @@
                     <label>数字重复性：</label>
                     <select v-model="customMap['repeat']" @change="setGameCustom">
                         <option value="1"> 可重复 基础分+{{ scores['repeat'] }}分 </option>
-                        <option value="0" checked> 不可重复 基础分+0分 </option>
+                        <option value="0"> 不可重复 基础分+0分 </option>
                     </select>
                 </div>
 
                 <div class="item">
                     <label>提示机制：</label>
                     <select v-model="customMap['purple']" @change="setGameCustom">
-                        <option value="0" checked> 经典 比例分+20% （+{{ scores['purple'] }}分） </option>
+                        <option value="0"> 经典 比例分+20% （+{{ scores['purple'] }}分） </option>
                         <option value="1"> 紫色 比例分+0% （+0分） </option>
                     </select>
                 </div>
@@ -66,7 +66,7 @@
                 <div class="item">
                     <label>输入次数：</label>
                     <select v-model="customMap['max']" @change="setGameCustom">
-                        <template v-for="(score,key) in scoreMap">
+                        <template v-for="(score,key) in scoreMap" :key="key">
                             <option :value="key">
                                 {{key}}次 比例分{{score['rate']*100}}% （+{{score['score']}}分）
                             </option>
@@ -137,7 +137,7 @@
                     <label>查看第几位数字：</label>
 
                     <select v-model="hint['pos']">
-                        <template v-for="n in game['Len']">
+                        <template v-for="n in game['Len']" :key="n">
                             <option :value="n-1"> {{ n }} </option>
                         </template>
                     </select>
@@ -148,15 +148,15 @@
 
                 </div>
 
-                <div v-if="hint['result']!==[]" class="text">
-                    <template v-for="h in hint['result']">
+                <div v-if="hint['result'].length > 0" class="text">
+                    <template v-for="(h,index) in hint['result']" :key="index">
                         <span> {{h}} </span><br>
                     </template>
                 </div>
             </div>
 
-            <div v-if="game['List'].length !== 0">
-                <div v-for="(list,i) in game['List']" class="text history-row">
+            <div v-if="game['List'].length > 0">
+                <div v-for="(list,i) in game['List']" class="text history-row" :key="i">
                     第{{i+1}}次：
                     <template v-for="(li,index) in list.digits">
                         <span :class="list.colors[index]"> {{ li }} </span>
@@ -197,9 +197,9 @@
         <div class="panel" id="panel-replay" name="回放界面" v-show=" panel['replay'] ">
             <h2> 🏆对局回放 </h2>
 
-            <div v-for="(list,i) in history['replay']['list']" class="text history-row">
+            <div v-for="(list,i) in history['replay']['list']" class="text history-row" :key="i">
                 第{{i+1}}次：
-                <template v-for="(li,index) in list.digits">
+                <template v-for="(li,index) in list.digits" :key="index">
                     <span :class="list.colors[index]"> {{ li }} </span>
                 </template>
             </div>
@@ -222,7 +222,7 @@
             <div class="item">
                 <label>背景音乐：</label>
                 <select v-model="Music['index']">
-                    <template v-for="(item,key) in AudioSrc">
+                    <template v-for="(item,key) in AudioSrc" :key="key">
                         <option :value="key"> {{ item['name'] }} </option>
                     </template>
                 </select>
