@@ -71,10 +71,10 @@ myApp({
                 '10': { 'name': '红昭愿', 'src': "./music/红昭愿.mp3" },
                 '11': { 'name': '我的悲伤是水做的', 'src': "./music/我的悲伤是水做的.ogg" },
             },
-            ImageSrc:{
-                '1':{'src':"./img/小奥-希望人没事.png"},
-                '2':{'src':"./img/大眼七夕封面.png"},
-                '3':{'src':"./img/小诗.png"},
+            ImageSrc: {
+                '1': { 'src': "./img/小奥-希望人没事.png" },
+                '2': { 'src': "./img/大眼七夕封面.png" },
+                '3': { 'src': "./img/小诗.png" },
             },
             Music: {
                 'index': '1',
@@ -82,9 +82,9 @@ myApp({
                 'src': "./music/蝶恋花.ogg",
                 'customSrc': '',
             },
-            Image:{
-                'index':'1',
-                'src':"./img/小奥-希望人没事.png",
+            Image: {
+                'index': '1',
+                'src': "./img/小奥-希望人没事.png",
             },
             panel: {
                 'mode': false,
@@ -113,9 +113,17 @@ myApp({
     created() {
         this.loadRecord();
         this.computeScore();
+        this.preloadImages();
     },
 
     methods: {
+        preloadImages() {
+            // 遍历 ImageSrc 预加载
+            Object.values(this.ImageSrc).forEach(item => {
+                const img = new Image();
+                img.src = item.src;
+            });
+        },
 
         clearGameMode: function () {          //清空模式
             this.game['Mode'] = 'classic';
@@ -504,10 +512,10 @@ myApp({
                 src = this.Music['customSrc'];
             }
 
-            if (!src){
+            if (!src) {
                 alert("请选择有效音频❗");
                 return;
-            } 
+            }
 
             if (!audio.paused) {    //判断是否已经暂停
                 audio.pause();      //暂停当前音频或视频
@@ -522,8 +530,8 @@ myApp({
 
         playImage: function () {
             const panels = document.querySelectorAll('.panel');
-            let i=this.Image['index'];
-            let src=this.ImageSrc[i]['src'];
+            let i = this.Image['index'];
+            let src = this.ImageSrc[i]['src'];
 
             panels.forEach(panel => {
                 panel.style.backgroundImage = `url(${src})`;

@@ -177,11 +177,15 @@
 
             <div class="text">
                 <div v-for="(h,i) in history['recent']" :key="i">
-                    <label :for="`locked-${i}`"> {{ h['locked'] ? '锁定' : '未锁定' }} </label>
+                    <label :for="`locked-${i}`">
+                        {{ h['locked'] ? '已锁定' : '未锁定' }}
+                    </label>
                     <input type="checkbox" :id="`locked-${i}`" :checked="h['locked']" @change="switchLock(i)">
-                    第{{i+1}}局.{{h['gameName']}}
-                    {{h['attempt']}}次/{{h['max']}}次
-                    {{h['score']}}分 {{h['win']?'胜':'负'}}
+                    <template>
+                        第{{i+1}}局.{{h['gameName']}}
+                        {{h['attempt']}}次/{{h['max']}}次
+                        {{h['score']}}分 {{h['win']?'胜':'负'}}
+                    </template>
                     <button @click="openReplay(h)"> 回放 </button>
                 </div>
                 <div v-if="history['recent'].length===0">暂无战绩</div>
@@ -258,11 +262,10 @@
                 <div v-if="!settingMap['setImage']">
                     <select v-model="Image['index']">
                         <template v-for="(item,key) in ImageSrc" :key="key">
-                            <option :value="key"> {{key}} </option>
+                            <option :value="key"> 第{{key}}张 </option>
                         </template>
                     </select>
-                    <img :src="ImageSrc[Image['index']]['src']" :alt="`第${Image['index']}张`" 
-                    style="width: 120px;">
+                    <img :src="ImageSrc[Image['index']]['src']" :alt="`第${Image['index']}张`" style="width: 120px;">
                     <button @click="playImage">确定</button>
                 </div>
                 <div v-else>
