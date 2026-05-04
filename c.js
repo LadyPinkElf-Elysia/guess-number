@@ -75,6 +75,10 @@ myApp({
                 '1': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/小奥-希望人没事.png" },
                 '2': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/大眼七夕封面.png" },
                 '3': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/小诗.png" },
+                '4': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/小诗心链.png" },
+                '5': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/诗奥薇.png" },
+                '6': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/可爱小诗.png" },
+                '7': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/大眼三女主.png" },
             },
             Music: {
                 'index': '1',
