@@ -58,6 +58,7 @@ myApp({
                 'ratio': 0,
                 'final': 0,
             },
+
             AudioSrc: {
                 '1': { 'name': '蝶恋花', 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/music/蝶恋花.mp3" },
                 '2': { 'name': '世末歌者', 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/music/世末歌者.ogg" },
@@ -90,6 +91,40 @@ myApp({
                 'index': '1',
                 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/小奥-希望人没事.png",
             },
+
+            // AudioSrc: {
+            //    '1': { 'name': '蝶恋花', 'src': "./music/蝶恋花.mp3" },
+            //    '2': { 'name': '世末歌者', 'src': "./music/世末歌者.ogg" },
+            //    '3': { 'name': '千本樱', 'src': "./music/千本樱.mp3" },
+            //    '4': { 'name': '大荒寻梦录', 'src': "./music/大荒寻梦录.mp3" },
+            //    '5': { 'name': '群青', 'src': "./music/群青.ogg" },
+            //     '6': { 'name': '浴火重生', 'src': "./music/浴火重生.ogg" },
+            //     '7': { 'name': '英雄出征', 'src': "./music/英雄出征.ogg" },
+            //     '8': { 'name': '非人哉', 'src': "./music/非人哉.mp3" },
+            //     '9': { 'name': '熙熙攘攘我们的城市', 'src': "./music/熙熙攘攘我们的城市.mp3" },
+            //     '10': { 'name': '红昭愿', 'src': "./music/红昭愿.mp3" },
+            //     '11': { 'name': '我的悲伤是水做的', 'src': "./music/我的悲伤是水做的.ogg" },
+            // },
+            // ImageSrc: {
+            //     '1': { 'src': "./img/小奥-希望人没事.png" },
+            //     '2': { 'src': "./img/大眼七夕封面.png" },
+            //     '3': { 'src': "./img/小诗.png" },
+            //     '4': { 'src': "./img/小诗心链.png" },
+            //     '5': { 'src': "./img/诗奥薇.png" },
+            //     '6': { 'src': "./img/可爱小诗.png" },
+            //     '7': { 'src': "./img/大眼三女主.png" },
+            // },
+            // Music: {
+            //     'index': '1',
+            //     'isPlaying': false,
+            //     'src': "./music/蝶恋花.ogg",
+            //     'customSrc': '',
+            // },
+            // Image: {
+            //     'index': '1',
+            //     'src': "./img/小奥-希望人没事.png",
+            // },
+
             panel: {
                 'mode': false,
                 'game': false,
