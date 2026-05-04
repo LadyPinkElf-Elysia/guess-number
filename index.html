@@ -261,7 +261,8 @@
                             <option :value="key"> {{key}} </option>
                         </template>
                     </select>
-                    <img :src="ImageSrc[Image['index']]['src']" :alt="`第${Image['index']}张`" style="width: 120px;">
+                    <img :src="ImageSrc[Image['index']]['src']" :alt="`第${Image['index']}张`" 
+                    style="width: 120px;">
                     <button @click="playImage">确定</button>
                 </div>
                 <div v-else>
