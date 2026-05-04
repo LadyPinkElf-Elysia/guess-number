@@ -220,17 +220,6 @@
             </div>
 
             <div class="item">
-                <label>背景音乐：</label>
-                <select v-model="Music['index']">
-                    <template v-for="(item,key) in AudioSrc" :key="key">
-                        <option :value="key"> {{ item['name'] }} </option>
-                    </template>
-                </select>
-                <audio ref="bgm" loop preload="auto"></audio>
-                <button @click="play"> {{ Music['isPlaying'] ? '⏸️' : '🎵' }} </button>
-            </div>
-
-            <div class="item">
                 <label>颜色判断机制：</label>
                 <select v-model="settingMap['dynamic']">
                     <option value="0">非动态</option>
@@ -239,8 +228,45 @@
             </div>
 
             <div class="item">
+                <label>背景音乐：</label>
+
+                <label for="audio">自定义</label>
+                <input type="checkbox" id="audio" v-model="settingMap['setAudio']">
+
+                <div v-if="!settingMap['setAudio']">
+                    <select v-model="Music['index']">
+                        <template v-for="(item,key) in AudioSrc" :key="key">
+                            <option :value="key"> {{ item['name'] }} </option>
+                        </template>
+                    </select>
+                </div>
+                <div v-else>
+                    <label for="bgm">上传音频（点我）</label>
+                    <input type="file" id="bgm" accept="audio/*" @change="setBgAudio">
+                </div>
+
+                <audio ref="bgm" loop preload="auto"></audio>
+                <button @click="playAudio"> {{ Music['isPlaying'] ? '⏸️' : '🎵' }} </button>
+            </div>
+
+            <div class="item">
                 <label>背景图片：</label>
-                <input type="file" ref="fileDom" accept="image/*" @change="setBgImage">
+
+                <label for="image">自定义</label>
+                <input type="checkbox" id="image" v-model="settingMap['setImage']">
+
+                <div v-if="!settingMap['setImage']">
+                    <select v-model="Image['index']">
+                        <template v-for="(item,key) in ImageSrc" :key="key">
+                            <option :value="key"> {{key}} </option>
+                        </template>
+                    </select>
+                    <button @click="playImage">默认背景</button>
+                </div>
+                <div v-else>
+                    <label for="img">上传图片（点我）</label>
+                    <input type="file" id="img" ref="fileDom" accept="image/*" @change="setBgImage">
+                </div>
             </div>
 
             <div>

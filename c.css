@@ -178,7 +178,6 @@ body {
     padding: 64px 36px;
     box-shadow: 0 4px 12px #dbeafe;
     margin-bottom: 16px;
-    background-image: url('./img/小奥-希望人没事.png');
     background-size: cover;
     background-position: center;
     background-blend-mode: overlay;
@@ -275,8 +274,7 @@ button:disabled {
 }
 
 /* ========== 输入框 & 上传框 半透明 ========== */
-input[type="text"],
-input[type="file"] {
+input[type="text"]{
     padding: 10px;
     border: 1px solid rgba(147, 197, 253, 0.6);
     border-radius: 12px;
@@ -284,6 +282,10 @@ input[type="file"] {
     text-align: center;
     background: rgba(255, 255, 255, 0.6);
     /* 透明 */
+}
+
+input[type="file"]{
+    display: none;
 }
 
 /* ========== 文本框 半透明 ========== */

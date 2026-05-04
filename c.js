@@ -72,10 +72,20 @@ myApp({
                 '10': { 'name': '红昭愿', 'src': "./music/红昭愿.ogg" },
                 '11': { 'name': '我的悲伤是水做的', 'src': "./music/我的悲伤是水做的.ogg" },
             },
+            ImageSrc:{
+                '1':{'src':"./img/小奥-希望人没事.png"},
+                '2':{'src':"./img/大眼七夕封面.png"},
+                '3':{'src':"./img/小诗.png"},
+            },
             Music: {
                 'index': '1',
                 'isPlaying': false,
                 'src': "./music/蝶恋花.ogg",
+                'customSrc': '',
+            },
+            Image:{
+                'index':'1',
+                'src':"./img/小奥-希望人没事.png",
             },
             panel: {
                 'mode': false,
@@ -92,7 +102,8 @@ myApp({
             settingMap: {
                 'dynamic': '0',
                 'historyMax': 10,
-                'bgImage': '',
+                'setAudio': false,
+                'setImage': false,
             },
             cheatHandler: null,
 
@@ -219,22 +230,6 @@ myApp({
             this.scores['final'] = base + this.scores['ratio'];
         },
 
-        play: function () {
-            let audio = this.$refs.bgm;
-            let i = this.Music['index'];
-            let src = this.AudioSrc[i]['src'];
-
-            if (!audio.paused) {    //判断是否已经暂停
-                audio.pause();      //暂停当前音频或视频
-                this.Music['isPlaying'] = false;
-            } else {
-                audio.src = src;
-                audio.load();       //重新加载音频或视频
-                audio.play();       //开始播放音频或视频
-                this.Music['isPlaying'] = true;
-            }
-        },
-
         startGame: function () {
             this.clearGameState();  //保留当前模式和数据，仅清除对局状态和提示重开一把
             this.clearHint();
@@ -350,8 +345,6 @@ myApp({
 
             this.game['Input'] = '';
         },
-
-
 
         getResult: function (userInput, target) {
             let u = userInput.split('');
@@ -501,6 +494,51 @@ myApp({
             let record = this.history['recent'][index];
             record['locked'] = !record['locked'];
             this.saveRecord();
+        },
+
+        playAudio: function () {
+            let audio = this.$refs.bgm;
+            let src;
+            if (!this.settingMap['setAudio']) {
+                let i = this.Music['index'];
+                src = this.AudioSrc[i]['src'];
+            } else {
+                src = this.Music['customSrc'];
+            }
+
+            if (!src) return;
+
+            if (!audio.paused) {    //判断是否已经暂停
+                audio.pause();      //暂停当前音频或视频
+                this.Music['isPlaying'] = false;
+            } else {
+                audio.src = src;
+                audio.load();       //重新加载音频或视频
+                audio.play();       //开始播放音频或视频
+                this.Music['isPlaying'] = true;
+            }
+        },
+
+        playImage: function () {
+            const panels = document.querySelectorAll('.panel');
+            let i=this.Image['index'];
+            let src=this.ImageSrc[i]['src'];
+
+            panels.forEach(panel => {
+                panel.style.backgroundImage = `url(${src})`;
+            });
+        },
+
+        setBgAudio: function (e) {
+            const file = e.target.files?.[0];
+
+            if (!file || !file.type.startsWith('audio/')) {
+                alert("请选择有效音频！");
+                return;
+            }
+
+            this.Music['customSrc'] = URL.createObjectURL(file);
+            this.Music['isPlaying'] = false;
         },
 
         setBgImage: function () {
