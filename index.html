@@ -238,7 +238,7 @@
                 <input type="checkbox" id="audio" v-model="settingMap['setAudio']">
 
                 <div v-if="!settingMap['setAudio']">
-                    <select v-model="Music['index']">
+                    <select v-model="Music['index']" style="width: 150px;">
                         <template v-for="(item,key) in AudioSrc" :key="key">
                             <option :value="key"> {{ item['name'] }} </option>
                         </template>
@@ -260,12 +260,12 @@
                 <input type="checkbox" id="image" v-model="settingMap['setImage']">
 
                 <div v-if="!settingMap['setImage']">
-                    <select v-model="Image['index']">
+                    <select v-model="Image['index']" style="width: 70px;">
                         <template v-for="(item,key) in ImageSrc" :key="key">
                             <option :value="key"> 第{{key}}张 </option>
                         </template>
                     </select>
-                    <img :src="ImageSrc[Image['index']]['src']" :alt="`第${Image['index']}张`" style="width: 120px;">
+                    <img :src="ImageSrc[Image['index']]['src']" :alt="`第${Image['index']}张`" style="width: 120px;height: 80px;">
                     <button @click="playImage">确定</button>
                 </div>
                 <div v-else>
