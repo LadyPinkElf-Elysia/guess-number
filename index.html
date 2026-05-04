@@ -58,7 +58,7 @@
                 <div class="item">
                     <label>提示机制：</label>
                     <select v-model="customMap['purple']" @change="setGameCustom">
-                        <option value="0"> 经典 比例分+20% （+{{ scores['purple'] }}分） </option>
+                        <option value="0"> 经典 比例分+{{purpleRate*100}}% （+{{ scores['purple'] }}分） </option>
                         <option value="1"> 紫色 比例分+0% （+0分） </option>
                     </select>
                 </div>
@@ -77,7 +77,7 @@
                 <div class="text">
                     <span> 基础分： {{ scores['base'] }} 分 </span><br>
                     <span> 比例分： {{ scores['ratio'] }} 分 </span><br>
-                    <span> 最终分： {{ scores['final'] }} 分 </span><br>
+                    <span> 胜利分： {{ scores['final'] }} 分 </span><br>
                     <span> 注意：若游戏失败，最终分为0分 </span><br>
                 </div>
             </div>
@@ -176,10 +176,10 @@
             <h2> 🏆最近 {{ settingMap['historyMax'] }} 局战绩 </h2>
 
             <div class="text">
-                <div v-for="(h,i) in history['recent']">
-                    <input type="checkbox" :checked="h['locked']" @change="switchLock(i)">
-                    {{h['locked'] ? '锁定':''}}
-                    {{i+1}}.{{h['gameName']}}
+                <div v-for="(h,i) in history['recent']" :key="i">
+                    <label :for="`locked-${i}`"> {{ h['locked'] ? '锁定' : '未锁定' }} </label>
+                    <input type="checkbox" :id="`locked-${i}`" :checked="h['locked']" @change="switchLock(i)">
+                    第{{i+1}}局.{{h['gameName']}}
                     {{h['attempt']}}次/{{h['max']}}次
                     {{h['score']}}分 {{h['win']?'胜':'负'}}
                     <button @click="openReplay(h)"> 回放 </button>
@@ -241,7 +241,7 @@
                     </select>
                 </div>
                 <div v-else>
-                    <label for="bgm">上传音频（点我）</label>
+                    <label for="bgm">上传</label>
                     <input type="file" id="bgm" accept="audio/*" @change="setBgAudio">
                 </div>
 
@@ -261,10 +261,11 @@
                             <option :value="key"> {{key}} </option>
                         </template>
                     </select>
-                    <button @click="playImage">默认背景</button>
+                    <img :src="ImageSrc[Image['index']]['src']" :alt="`第${Image['index']}张`" style="width: 120px;">
+                    <button @click="playImage">确定</button>
                 </div>
                 <div v-else>
-                    <label for="img">上传图片（点我）</label>
+                    <label for="img">上传</label>
                     <input type="file" id="img" ref="fileDom" accept="image/*" @change="setBgImage">
                 </div>
             </div>

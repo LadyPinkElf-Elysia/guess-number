@@ -284,7 +284,7 @@ input[type="text"]{
     /* 透明 */
 }
 
-input[type="file"]{
+input[type="file"],input[type="checkbox"]{
     display: none;
 }
 

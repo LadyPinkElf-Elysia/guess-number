@@ -40,7 +40,6 @@ myApp({
                 'Attempts': 0,
                 'List': [],
                 'Color': [],
-
                 'Msg': '',
                 'Win': false,
                 'Lost': false,
@@ -137,7 +136,6 @@ myApp({
             this.game['Attempts'] = 0;
             this.game['List'] = [];
             this.game['Color'] = [];
-
             this.game['Msg'] = '';
             this.game['Win'] = false;
             this.game['Lost'] = false;
@@ -338,7 +336,7 @@ myApp({
                 this.removeCheatKey();
             } else if (this.game['Attempts'] >= this.game['Max']) {
                 this.game['Lost'] = true;
-                this.game['Msg'] = `游戏结束，答案是${this.game['Target']}✅`;
+                this.game['Msg'] = `游戏结束，答案是${this.game['Target']}❗`;
                 this.addRecord();
                 this.removeCheatKey();
             }
@@ -506,7 +504,10 @@ myApp({
                 src = this.Music['customSrc'];
             }
 
-            if (!src) return;
+            if (!src){
+                alert("请选择有效音频❗");
+                return;
+            } 
 
             if (!audio.paused) {    //判断是否已经暂停
                 audio.pause();      //暂停当前音频或视频
@@ -533,7 +534,7 @@ myApp({
             const file = e.target.files?.[0];
 
             if (!file || !file.type.startsWith('audio/')) {
-                alert("请选择有效音频！");
+                alert("请选择有效音频❗");
                 return;
             }
 
@@ -545,7 +546,7 @@ myApp({
             const file = this.$refs.fileDom.files?.[0];//只读取一个文件
 
             if (!file || !file.type.startsWith('image/')) {
-                alert("请选择有效图片！");
+                alert("请选择有效图片❗");
                 return;
             }
 
