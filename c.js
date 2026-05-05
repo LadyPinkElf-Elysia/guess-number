@@ -284,7 +284,9 @@ myApp({
             this.game['Target'] = this.getTarget();
             this.game['Msg'] = '新局开始✅';
 
-            if (!this.cheatHandler) { this.cheatKey(); }
+            if (!this.cheatHandler) { 
+                this.cheatKey(); 
+            }
             this.showPanel('game');
         },
 
