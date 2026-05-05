@@ -77,9 +77,9 @@ myApp({
                 '2': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/大眼七夕封面.png" },
                 '3': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/小诗.png" },
                 '4': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/小诗心链.png" },
-                '5': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/诗奥薇.png" },
+                '5': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/尼娅.png" },
                 '6': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/可爱小诗.png" },
-                '7': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/大眼三女主.png" },
+                '7': { 'src': "https://cdn.jsdelivr.net/gh/ladypinkelf-elysia/guess-number/img/粉色妖精小姐-爱莉.png" },
             },
             Music: {
                 'index': '1',
