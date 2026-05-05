@@ -293,6 +293,10 @@ myApp({
                 this.panel[key] = false;
             }
             this.panel[name] = true;
+
+            if(name!=='game'){
+                this.removeCheatKey();
+            }
         },
 
         showAnswer: function () {
@@ -362,6 +366,7 @@ myApp({
         onInput: function () {
             this.game['Input'] = this.game['Input'].replace(/[^\d]/g, '');
             this.settingMap['historyMax'] = this.settingMap['historyMax'].replace(/\D/g, '').replace(/^0+/, '').slice(0, 2);
+            if(!this.settingMap['historyMax'])  this.settingMap['historyMax']='10';
             //  /**/：正则表达式包裹符 \d：代表任意数字 0-9 [^\d]：^ 在方括号里 = 取反 → 意思：不是数字的所有字符 
             //  g：全局匹配（global）→ 不止删第一个，全文全部删掉
             //  replace(匹配内容, 替换内容) 匹配：所有非数字 替换成：空字符串 '' = 直接删除
@@ -490,7 +495,7 @@ myApp({
                 'locked': false,
             });
 
-            let maxCount = Number(this.settingMap['historyMax']);
+            let maxCount = Number(this.settingMap['historyMax']) || 10 ;
             let locked = this.history['recent'].filter(i => i.locked);
             let unlocked = this.history['recent'].filter(i => !i.locked);
             //filter(元素 => 筛选条件)，用于筛选数组元素，返回符合条件的数组，不修改原数组
