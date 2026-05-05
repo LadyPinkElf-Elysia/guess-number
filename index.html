@@ -232,10 +232,14 @@
             </div>
 
             <div class="item">
-                <label>背景音乐：</label>
+                <div>
+                    <label>背景音乐：</label>
+                </div>
 
-                <label for="audio">自定义</label>
-                <input type="checkbox" id="audio" v-model="settingMap['setAudio']">
+                <div>
+                    <label for="audio">自定义</label>
+                    <input type="checkbox" id="audio" v-model="settingMap['setAudio']">
+                </div>
 
                 <div v-if="!settingMap['setAudio']">
                     <select v-model="Music['index']" style="width: 150px;">
@@ -249,15 +253,22 @@
                     <input type="file" id="bgm" accept="audio/*" @change="setBgAudio">
                 </div>
 
-                <audio ref="bgm" loop preload="auto"></audio>
-                <button @click="playAudio"> {{ Music['isPlaying'] ? '⏸️' : '🎵' }} </button>
+                <div>
+                    <audio ref="bgm" loop preload="auto"></audio>
+                    <button @click="playAudio"> {{ Music['isPlaying'] ? '⏸️' : '🎵' }} </button>
+                </div>
+
             </div>
 
             <div class="item">
-                <label>背景图片：</label>
+                <div>
+                    <label>背景图片：</label>
+                </div>
 
-                <label for="image">自定义</label>
-                <input type="checkbox" id="image" v-model="settingMap['setImage']">
+                <div>
+                    <label for="image">自定义</label>
+                    <input type="checkbox" id="image" v-model="settingMap['setImage']">
+                </div>
 
                 <div v-if="!settingMap['setImage']">
                     <select v-model="Image['index']" style="width: 70px;">
@@ -265,13 +276,15 @@
                             <option :value="key"> 第{{key}}张 </option>
                         </template>
                     </select>
-                    <img :src="ImageSrc[Image['index']]['src']" :alt="`第${Image['index']}张`" style="width: 120px;height: 80px;">
+                    <img :src="ImageSrc[Image['index']]['src']" :alt="`第${Image['index']}张`"
+                        style="width: 120px;height: 80px;">
                     <button @click="playImage">确定</button>
                 </div>
                 <div v-else>
                     <label for="img">上传</label>
                     <input type="file" id="img" ref="fileDom" accept="image/*" @change="setBgImage">
                 </div>
+
             </div>
 
             <div>
