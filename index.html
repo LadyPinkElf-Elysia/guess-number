@@ -181,11 +181,11 @@
                         {{ h['locked'] ? '已锁定' : '未锁定' }}
                     </label>
                     <input type="checkbox" :id="`locked-${i}`" :checked="h['locked']" @change="switchLock(i)">
-                    <template>
+                    <span>
                         第{{i+1}}局.{{h['gameName']}}
                         {{h['attempt']}}次/{{h['max']}}次
                         {{h['score']}}分 {{h['win']?'胜':'负'}}
-                    </template>
+                    </span>
                     <button @click="openReplay(h)"> 回放 </button>
                 </div>
                 <div v-if="history['recent'].length===0">暂无战绩</div>

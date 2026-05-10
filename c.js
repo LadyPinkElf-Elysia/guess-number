@@ -141,7 +141,7 @@ myApp({
             },
             settingMap: {
                 'dynamic': '0',
-                'historyMax': 10,
+                'historyMax': '10',
                 'setAudio': false,
                 'setImage': false,
             },
